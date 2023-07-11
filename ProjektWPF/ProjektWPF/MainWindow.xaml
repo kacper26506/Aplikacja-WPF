@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="buttonOK" Content="OK" HorizontalAlignment="Left" Height="91" Margin="187,97,0,0" VerticalAlignment="Top" Width="209"/>
+        <Label Content="Plastusiowy pamiętnik" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36"/>
+        <Button x:Name="buttonOdliczenia" Content="Odliczenia" HorizontalAlignment="Left" Height="34" Margin="120,254,0,0" VerticalAlignment="Top" Width="149" FontFamily="Arial" FontSize="24" Click="buttonOdliczenia_Click"/>
+        <Button x:Name="buttonWydarzenia" Content="Pamiętnik" HorizontalAlignment="Left" Height="34" Margin="508,254,0,0" VerticalAlignment="Top" Width="149" FontFamily="Arial" FontSize="24" Click="buttonWydarzenia_Click"/>
+        <Label Content="{Binding Path=CurrentTime}" HorizontalAlignment="Center" Margin="0,99,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="45" Width="600"/>
 
     </Grid>
 </Window>

@@ -10,31 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ProjektWPF
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy DodawanieEdycjaWydarzen.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DodawanieEdycjaWydarzen : Window
     {
-        public MainWindow()
+        public DodawanieEdycjaWydarzen()
         {
             InitializeComponent();
         }
 
-        private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)
+        private void buttonOpusc_Click(object sender, RoutedEventArgs e)
         {
-            OdliczeniaDoSwiat odliczeniaDoSwiat = new OdliczeniaDoSwiat();
-            odliczeniaDoSwiat.ShowDialog();
+            this.Close();
         }
 
-        private void buttonWydarzenia_Click(object sender, RoutedEventArgs e)
+        private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
         {
-            Pamietnik pamietnik = new Pamietnik();
-            pamietnik.ShowDialog();
+
         }
     }
 }
