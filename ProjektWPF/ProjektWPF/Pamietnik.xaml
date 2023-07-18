@@ -19,6 +19,6 @@
         <Button x:Name="buttonDodajWydarzenie" Content="Dodaj wydarzenie" HorizontalAlignment="Left" Margin="18,315,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonDodajWydarzenie_Click" Width="208"/>
         <Button x:Name="buttonEdytujWydarzenie" Content="Edytuj wydarzenie" HorizontalAlignment="Left" Margin="238,315,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonEdytujWydarzenie_Click" Width="208"/>
         <Button x:Name="buttonUsuńWydarzenie" Content="Usuń wydarzenie" HorizontalAlignment="Left" Margin="458,315,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonUsunWydarzenie_Click" Width="208"/>
-        <Button x:Name="buttonOpusc" Content="Wyjdź" HorizontalAlignment="Left" Margin="691,361,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="75"/>
+        <Button x:Name="buttonOpusc" Content="OK" HorizontalAlignment="Left" Margin="691,361,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="75"/>
     </Grid>
 </Window>
