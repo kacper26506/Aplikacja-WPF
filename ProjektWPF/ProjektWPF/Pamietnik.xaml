@@ -10,7 +10,7 @@
         <ListView x:Name="listViewPamietnik" Margin="0,47,0,170">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Data wydarzenia" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Data wydarzenia!" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Nazwa wydarzenia" Width="680"/>
                     <GridViewColumn/>
                 </GridView>
