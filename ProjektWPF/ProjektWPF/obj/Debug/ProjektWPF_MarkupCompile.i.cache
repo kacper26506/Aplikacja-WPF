@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Kacper\Documents\GitHub\Aplikacja-WPF\ProjektWPF\ProjektWPF\obj\Debug\
+C:\Users\Kacper\Documents\ProjektWPF\ProjektWPF\obj\Debug\
 ProjektWPF
 none
 false
 DEBUG;TRACE
-C:\Users\Kacper\Documents\GitHub\Aplikacja-WPF\ProjektWPF\ProjektWPF\App.xaml
-42109337554
+C:\Users\Kacper\Documents\ProjektWPF\ProjektWPF\App.xaml
+42028209840
 
-10-1180461812
+10244935409
 13-1310406943
-DodawanieEdycjaWydarzen.xaml;MainWindow.xaml;OdliczeniaDoSwiat.xaml;Pamietnik.xaml;
+DodawanieEdycjaWydarzen.xaml;MainWindow.xaml;Odliczenia.xaml;Historia.xaml;
 
-True
+False
 

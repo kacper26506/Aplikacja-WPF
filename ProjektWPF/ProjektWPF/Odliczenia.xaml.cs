@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektWPF.Czas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,20 +16,28 @@ using System.Windows.Shapes;
 namespace ProjektWPF
 {
     /// <summary>
-    /// Logika interakcji dla klasy Pamietnik.xaml
+    /// Logika interakcji dla klasy OdliczeniaDoSwiat.xaml
     /// </summary>
-    public partial class Pamietnik : Window
+    public partial class Odliczenia : Window
     {
-        public Pamietnik()
+        public Odliczenia()
         {
             InitializeComponent();
+            SformatujIWyswietlDate();
         }
-
-        private void buttonOpusc_Click(object sender, RoutedEventArgs e)
+        private void SformatujIWyswietlDate()
         {
-            this.Close();
+            DateTime CurrentTime = DateTime.Now;
+            Data data = new Data();
+            data.Dzien = CurrentTime.Day;
+            data.Rok = CurrentTime.Year;
+            data.Godzina = data.UstawNumer(CurrentTime.Hour);
+            data.Minuta = data.UstawNumer(CurrentTime.Minute);
+            data.Sekunda = data.UstawNumer(CurrentTime.Second);
+            labelCurrentTime.Content = data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            data.Sekunda;
         }
-
         private void buttonDodajWydarzenie_Click(object sender, RoutedEventArgs e)
         {
             DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen();
@@ -44,6 +53,11 @@ namespace ProjektWPF
         private void buttonUsunWydarzenie_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void buttonOpusc_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

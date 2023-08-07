@@ -15,23 +15,13 @@ using System.Windows.Shapes;
 namespace ProjektWPF
 {
     /// <summary>
-    /// Logika interakcji dla klasy OdliczeniaDoSwiat.xaml
+    /// Logika interakcji dla klasy Pamietnik.xaml
     /// </summary>
-    public partial class OdliczeniaDoSwiat : Window
+    public partial class Historia : Window
     {
-        public OdliczeniaDoSwiat()
+        public Historia()
         {
             InitializeComponent();
-        }
-
-        private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void buttonUsunSwieto_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void buttonOpusc_Click(object sender, RoutedEventArgs e)

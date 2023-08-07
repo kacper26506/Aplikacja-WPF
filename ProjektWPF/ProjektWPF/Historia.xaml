@@ -1,0 +1,23 @@
+﻿<Window x:Class="ProjektWPF.Historia"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjektWPF"
+        mc:Ignorable="d"
+        Title="Historia" Height="463" Width="800">
+    <Grid>
+        <ListView x:Name="listViewPamietnik" Margin="0,47,0,170">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Data wydarzenia" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Nazwa wydarzenia" Width="350"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Cykliczne" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Typ odliczania" Width="230"/>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="buttonOpusc" Content="Wyjdź" HorizontalAlignment="Left" Margin="691,361,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="75"/>
+    </Grid>
+</Window>

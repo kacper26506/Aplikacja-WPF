@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProjektWPF.Czas;
 
 namespace ProjektWPF
 {
@@ -23,18 +24,31 @@ namespace ProjektWPF
         public MainWindow()
         {
             InitializeComponent();
+            SformatujIWyswietlDate();
         }
-
+        private void SformatujIWyswietlDate()
+        {
+            DateTime CurrentTime = DateTime.Now;
+            Data data = new Data();
+            data.Dzien = CurrentTime.Day;
+            data.Rok = CurrentTime.Year;
+            data.Godzina = data.UstawNumer(CurrentTime.Hour);
+            data.Minuta = data.UstawNumer(CurrentTime.Minute);
+            data.Sekunda = data.UstawNumer(CurrentTime.Second);
+            labelCurrentTime.Content = data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            data.Sekunda;
+        }
         private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)
         {
-            OdliczeniaDoSwiat odliczeniaDoSwiat = new OdliczeniaDoSwiat();
-            odliczeniaDoSwiat.ShowDialog();
+            Odliczenia odliczenia = new Odliczenia();
+            odliczenia.ShowDialog();
         }
 
         private void buttonWydarzenia_Click(object sender, RoutedEventArgs e)
         {
-            Pamietnik pamietnik = new Pamietnik();
-            pamietnik.ShowDialog();
+            Historia historia = new Historia();
+            historia.ShowDialog();
         }
     }
 }
