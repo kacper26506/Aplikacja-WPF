@@ -35,8 +35,8 @@ namespace ProjektWPF
             data.Godzina = data.UstawNumer(CurrentTime.Hour);
             data.Minuta = data.UstawNumer(CurrentTime.Minute);
             data.Sekunda = data.UstawNumer(CurrentTime.Second);
-            labelCurrentTime.Content = data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
-            data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
             data.Sekunda;
         }
         private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)

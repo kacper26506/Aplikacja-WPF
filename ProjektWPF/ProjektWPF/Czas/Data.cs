@@ -8,9 +8,9 @@ namespace ProjektWPF.Czas
 {
     public class Data
     {
-        public string[] DzienTygodnia = {"poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"};
+        public static readonly string[] DzienTygodnia = {"poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"};
         public int Dzien { get; set; }
-        public string[] NazwaMiesiaca = {"stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", 
+        public static readonly string[] NazwaMiesiaca = {"stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", 
         "lipca", "sierpnia", "września", "października", "listopada", "grudnia"};
         public int Rok { get; set; }
         public object Godzina { get; set; }
