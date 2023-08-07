@@ -67,7 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Data.cs" />
+    <Compile Include="Czas\Data.cs" />
     <Compile Include="DodawanieEdycjaWydarzen.xaml.cs">
       <DependentUpon>DodawanieEdycjaWydarzen.xaml</DependentUpon>
     </Compile>
@@ -75,21 +75,21 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OdliczeniaDoSwiat.xaml">
+    <Page Include="Odliczenia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pamietnik.xaml">
+    <Page Include="Historia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OdliczeniaDoSwiat.xaml.cs">
-      <DependentUpon>OdliczeniaDoSwiat.xaml</DependentUpon>
+    <Compile Include="Odliczenia.xaml.cs">
+      <DependentUpon>Odliczenia.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pamietnik.xaml.cs">
-      <DependentUpon>Pamietnik.xaml</DependentUpon>
+    <Compile Include="Historia.xaml.cs">
+      <DependentUpon>Historia.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
