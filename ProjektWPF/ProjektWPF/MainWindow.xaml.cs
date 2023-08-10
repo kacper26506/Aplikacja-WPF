@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProjektWPF.Czas;
+using ProjektWPF.Model_danych;
 
 namespace ProjektWPF
 {

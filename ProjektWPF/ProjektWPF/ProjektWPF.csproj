@@ -85,6 +85,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model danych\TypOdliczania.cs" />
+    <Compile Include="Model danych\WydarzenieModel.cs" />
     <Compile Include="Odliczenia.xaml.cs">
       <DependentUpon>Odliczenia.xaml</DependentUpon>
     </Compile>

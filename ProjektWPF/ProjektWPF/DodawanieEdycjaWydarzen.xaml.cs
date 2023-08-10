@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ProjektWPF.Model_danych;
 
 namespace ProjektWPF
 {
@@ -19,19 +20,63 @@ namespace ProjektWPF
     /// </summary>
     public partial class DodawanieEdycjaWydarzen : Window
     {
-        public DodawanieEdycjaWydarzen()
+        bool success;
+        WydarzenieModel element;
+        public DodawanieEdycjaWydarzen(WydarzenieModel model)
         {
             InitializeComponent();
+            success = false;
+            typCyklu.IsEnabled = false;
+            nazwaWydarzenia.DataContext = model;
+            datePickerData.DataContext = model;
+            comboBoxGodziny.ItemsSource = NumeryCzasowe(24);
+            comboBoxGodziny.DataContext = model;
+            comboBoxMinuty.ItemsSource = NumeryCzasowe(60);
+            comboBoxMinuty.DataContext = model;
+            cykl.DataContext = model;
+            this.element = model;
         }
-
+        private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
+        {
+            if (element.Nazwa.Length>0)
+            {
+                success = true;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Nazwa nie może być pusta");
+            }
+        }
         private void buttonOpusc_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
-        private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
+        private void cykl_Checked(object sender, RoutedEventArgs e)
         {
-
+             typCyklu.IsEnabled = true;
+        }
+        public List<string> NumeryCzasowe(int numer)
+        {
+            List<string> numery = new List<string>();
+            for (int i = 0; i < numer; i++)
+            {
+                string text = "";
+                if (i < 10)
+                {
+                    text += "0";
+                }
+                text += i;
+                numery.Add(text);
+            }
+            return numery;
+        }
+        public bool Success
+        {
+            get
+            {
+                return success;
+            }
         }
     }
 }

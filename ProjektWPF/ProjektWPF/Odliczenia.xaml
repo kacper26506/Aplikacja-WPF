@@ -7,15 +7,14 @@
         mc:Ignorable="d"
         Title="Odliczenia" Height="602" Width="800">
     <Grid>
-        <Label x:Name="labelCurrentTime" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="68" Width="600"/>
+        <Label x:Name="labelCurrentTime" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="68" Width="693"/>
         <ListView x:Name="listViewOdliczenia"  Margin="0,108,0,174">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Data wydarzenia" Width="120"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Nazwa wydarzenia" Width="350"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Cykliczne" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Typ odliczania" Width="230"/>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Nazwa}" Header="Nazwa wydarzenia" Width="250"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Data}" Header="Data wydarzenia" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Cykliczne}" Header="Cykliczne" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TypOdliczania}" Header="Typ odliczania" Width="230"/>
                 </GridView>
             </ListView.View>
         </ListView>
