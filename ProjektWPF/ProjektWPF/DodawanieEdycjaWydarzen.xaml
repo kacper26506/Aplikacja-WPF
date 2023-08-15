@@ -11,18 +11,21 @@
         <Button x:Name="buttonPotwierdz" Content="OK" HorizontalAlignment="Left" Margin="512,265,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Width="48" Click="buttonPotwierdz_Click" Height="32"/>
         <Label Content="Nazwa:" HorizontalAlignment="Left" Margin="40,18,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="90"/>
         <Label Content="Data:" HorizontalAlignment="Left" Margin="40,74,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="67"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="151,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="151,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="nazwaWydarzenia" HorizontalAlignment="Left" Height="23" Margin="151,25,0,0" Text="{Binding Path=Nazwa}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <Label Content="Cykliczne:" HorizontalAlignment="Left" Margin="40,128,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="122"/>
         <Label Content="Typ odliczania:" HorizontalAlignment="Left" Margin="40,180,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="166"/>
-        <CheckBox HorizontalAlignment="Left" Margin="167,139,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="228,180,0,0" VerticalAlignment="Top" Width="257" Height="38" FontFamily="Arial" FontSize="24">
+        <CheckBox x:Name="cykl" HorizontalAlignment="Left" Margin="167,139,0,0" VerticalAlignment="Top" Checked="cykl_Checked"/>
+        <ComboBox x:Name="typCyklu" HorizontalAlignment="Left" Margin="228,180,0,0" VerticalAlignment="Top" Width="257" Height="38" FontFamily="Arial" FontSize="24">
             <ComboBoxItem Content="Rok"/>
             <ComboBoxItem Content="Kwartał"/>
             <ComboBoxItem Content="Miesiąc"/>
             <ComboBoxItem Content="Tydzień"/>
             <ComboBoxItem Content="Dzień"/>
         </ComboBox>
+        <DatePicker x:Name="datePickerData" SelectedDate="{Binding DataOdliczania}" HorizontalAlignment="Left" Margin="151,81,0,0"  VerticalAlignment="Top" Width="109"/>
+        <ComboBox x:Name="comboBoxGodziny" SelectedIndex="{Binding Hour}" HorizontalAlignment="Left" Margin="277,83,0,0" VerticalAlignment="Top" Width="57"/>
+        <ComboBox x:Name="comboBoxMinuty"  SelectedIndex="{Binding Minute}" HorizontalAlignment="Left" Margin="366,83,0,0" VerticalAlignment="Top" Width="57"/>
+        <Label Content=":" HorizontalAlignment="Left" Margin="344,81,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

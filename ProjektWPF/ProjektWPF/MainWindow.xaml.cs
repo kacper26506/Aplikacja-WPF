@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProjektWPF.Czas;
+using ProjektWPF.Model_danych;
 
 namespace ProjektWPF
 {
@@ -35,7 +36,7 @@ namespace ProjektWPF
             data.Godzina = data.UstawNumer(CurrentTime.Hour);
             data.Minuta = data.UstawNumer(CurrentTime.Minute);
             data.Sekunda = data.UstawNumer(CurrentTime.Second);
-            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
             Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
             data.Sekunda;
         }
