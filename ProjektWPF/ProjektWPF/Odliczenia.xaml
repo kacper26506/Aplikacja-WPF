@@ -13,8 +13,8 @@
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Nazwa}" Header="Nazwa wydarzenia" Width="250"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Data}" Header="Data wydarzenia" Width="170"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Cykliczne}" Header="Cykliczne" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TypOdliczania}" Header="Typ odliczania" Width="230"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CzyCykliczne}" Header="Cykliczne" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="230"/>
                 </GridView>
             </ListView.View>
         </ListView>

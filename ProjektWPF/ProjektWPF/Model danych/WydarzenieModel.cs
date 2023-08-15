@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Documents;
 
 namespace ProjektWPF.Model_danych
 {
@@ -14,13 +15,15 @@ namespace ProjektWPF.Model_danych
         public string Nazwa { get; set; }
         public DateTime DataOdliczania { get; set; }
         public bool Cykliczne { get; set; }
+        public string CzyCykliczne { get; set; }
         public TypOdliczania Typ { get; set; }
         public WydarzenieModel()
         {
-            this.ID = ID;
-            this.Nazwa = "sd";
+            this.ID = Guid.NewGuid();
+            this.Nazwa = "";
             this.DataOdliczania = DateTime.Now;
-            this.Cykliczne = Cykliczne;
+            this.Cykliczne = false;
+            this.CzyCykliczne = "NIE";
         }
         public WydarzenieModel(WydarzenieModel model)
         {
@@ -28,6 +31,7 @@ namespace ProjektWPF.Model_danych
             this.Nazwa = model.Nazwa;
             this.DataOdliczania = model.DataOdliczania;
             this.Cykliczne = model.Cykliczne;
+            this.CzyCykliczne = model.CzyCykliczne;
         }
         public string Data
         {

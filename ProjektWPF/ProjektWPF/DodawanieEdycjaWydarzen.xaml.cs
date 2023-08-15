@@ -21,12 +21,13 @@ namespace ProjektWPF
     public partial class DodawanieEdycjaWydarzen : Window
     {
         bool success;
-        WydarzenieModel element;
+        public WydarzenieModel element;
+        public WydarzeniaDM Element;
         public DodawanieEdycjaWydarzen(WydarzenieModel model)
         {
             InitializeComponent();
             success = false;
-            typCyklu.IsEnabled = false;
+            typCyklu.IsEnabled = model.Cykliczne;
             nazwaWydarzenia.DataContext = model;
             datePickerData.DataContext = model;
             comboBoxGodziny.ItemsSource = NumeryCzasowe(24);
@@ -34,11 +35,27 @@ namespace ProjektWPF
             comboBoxMinuty.ItemsSource = NumeryCzasowe(60);
             comboBoxMinuty.DataContext = model;
             cykl.DataContext = model;
+            model.CzyCykliczne = model.CzyCykliczne;
             this.element = model;
+        }
+        public DodawanieEdycjaWydarzen(WydarzeniaDM model)
+        {
+            InitializeComponent();
+            success = false;
+            typCyklu.IsEnabled = model.Cykliczne;
+            nazwaWydarzenia.DataContext = model;
+            datePickerData.DataContext = model;
+            comboBoxGodziny.ItemsSource = NumeryCzasowe(24);
+            comboBoxGodziny.DataContext = model;
+            comboBoxMinuty.ItemsSource = NumeryCzasowe(60);
+            comboBoxMinuty.DataContext = model;
+            cykl.DataContext = model;
+            model.CzyCykliczne = model.CzyCykliczne;
+            this.Element = model;
         }
         private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
         {
-            if (element.Nazwa.Length>0)
+            if ((element.Nazwa.Length>0) || (Element.Nazwa.Length > 0))
             {
                 success = true;
                 this.Close();
@@ -55,6 +72,7 @@ namespace ProjektWPF
         private void cykl_Checked(object sender, RoutedEventArgs e)
         {
              typCyklu.IsEnabled = true;
+             element.CzyCykliczne = "TAK"; 
         }
         public List<string> NumeryCzasowe(int numer)
         {

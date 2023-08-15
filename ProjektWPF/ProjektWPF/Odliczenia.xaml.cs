@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjektWPF.Czas;
 using ProjektWPF.Model_danych;
+using ProjektWPF.Serwis;
 
 namespace ProjektWPF
 {
@@ -21,11 +22,17 @@ namespace ProjektWPF
     /// </summary>
     public partial class Odliczenia : Window
     {
-        public List<WydarzenieModel> ListaWydarzen = new List<WydarzenieModel>();
+        Service service;
         public Odliczenia()
         {
             InitializeComponent();
             SformatujIWyswietlDate();
+            service = new Service();
+            List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
+            for (int i=0; i<service.Wydarzenia.Count; i++)
+            {
+                listViewOdliczenia.Items.Add(ListaWydarzen[i]);
+            }
         }
         
         private void buttonDodajWydarzenie_Click(object sender, RoutedEventArgs e)
@@ -35,8 +42,7 @@ namespace ProjektWPF
             dodawanieEdycjaWydarzen.ShowDialog();
             if (dodawanieEdycjaWydarzen.Success)
             {
-                ListaWydarzen.Add(item);
-                listViewOdliczenia.Items.Add(item);
+                listViewOdliczenia.Items.Add(service.DodajWydarzenie(dodawanieEdycjaWydarzen.element));
             }           
         }
 
@@ -56,6 +62,7 @@ namespace ProjektWPF
                         listViewOdliczenia.Items.RemoveAt(index);
                         listViewOdliczenia.Items.Insert(index, item);
                         listViewOdliczenia.Items.Refresh();
+                        service.EdytujWydarzenie(element);
                     }
                 }
                 else
@@ -67,6 +74,7 @@ namespace ProjektWPF
             {
                 MessageBox.Show("Brak wydarzeń do edycji");
             }
+
         }
 
         private void buttonUsunWydarzenie_Click(object sender, RoutedEventArgs e)
@@ -76,8 +84,8 @@ namespace ProjektWPF
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
                     WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
+                    service.UsunWydarzenie(item.ID);
                     listViewOdliczenia.Items.Remove(item);
-                    ListaWydarzen.Remove(item);
                 }
                 else
                 {
@@ -103,9 +111,11 @@ namespace ProjektWPF
             data.Godzina = data.UstawNumer(CurrentTime.Hour);
             data.Minuta = data.UstawNumer(CurrentTime.Minute);
             data.Sekunda = data.UstawNumer(CurrentTime.Second);
-            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
             Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
             data.Sekunda;
         }
+
+        
     }
 }

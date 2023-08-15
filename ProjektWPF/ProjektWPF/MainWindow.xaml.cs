@@ -36,7 +36,7 @@ namespace ProjektWPF
             data.Godzina = data.UstawNumer(CurrentTime.Hour);
             data.Minuta = data.UstawNumer(CurrentTime.Minute);
             data.Sekunda = data.UstawNumer(CurrentTime.Second);
-            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek - 1] + ", " + data.Dzien + " " +
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
             Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
             data.Sekunda;
         }
