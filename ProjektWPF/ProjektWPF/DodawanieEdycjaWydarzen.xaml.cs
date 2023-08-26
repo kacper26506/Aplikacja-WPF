@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjektWPF.Model_danych;
+using ProjektWPF.Serwis;
 
 namespace ProjektWPF
 {
@@ -22,12 +23,10 @@ namespace ProjektWPF
     {
         bool success;
         public WydarzenieModel element;
-        public WydarzeniaDM Element;
         public DodawanieEdycjaWydarzen(WydarzenieModel model)
         {
             InitializeComponent();
             success = false;
-            typCyklu.IsEnabled = model.Cykliczne;
             nazwaWydarzenia.DataContext = model;
             datePickerData.DataContext = model;
             comboBoxGodziny.ItemsSource = NumeryCzasowe(24);
@@ -35,35 +34,63 @@ namespace ProjektWPF
             comboBoxMinuty.ItemsSource = NumeryCzasowe(60);
             comboBoxMinuty.DataContext = model;
             cykl.DataContext = model;
+            typCyklu.IsEnabled = model.Cykliczne;
+            typCyklu.DataContext = model;
             model.CzyCykliczne = model.CzyCykliczne;
             this.element = model;
         }
-        public DodawanieEdycjaWydarzen(WydarzeniaDM model)
-        {
-            InitializeComponent();
-            success = false;
-            typCyklu.IsEnabled = model.Cykliczne;
-            nazwaWydarzenia.DataContext = model;
-            datePickerData.DataContext = model;
-            comboBoxGodziny.ItemsSource = NumeryCzasowe(24);
-            comboBoxGodziny.DataContext = model;
-            comboBoxMinuty.ItemsSource = NumeryCzasowe(60);
-            comboBoxMinuty.DataContext = model;
-            cykl.DataContext = model;
-            model.CzyCykliczne = model.CzyCykliczne;
-            this.Element = model;
-        }
         private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
         {
-            if ((element.Nazwa.Length>0) || (Element.Nazwa.Length > 0))
+            if (element.Nazwa.Length == 0)
+            { 
+                MessageBox.Show("Nazwa nie może być pusta");
+                return;
+            }
+            if (cykl.IsChecked.HasValue && cykl.IsChecked.Value)
             {
-                success = true;
-                this.Close();
+                switch (typCyklu.SelectedIndex)
+                {
+                    case 0:
+                        element.Typ = TypOdliczania.Rok;
+                        break;
+                    case 1:
+                        element.Typ = TypOdliczania.Kwartał;
+                        break;
+                    case 2:
+                        element.Typ = TypOdliczania.Miesiąc;
+                        break;
+                    case 3:
+                        element.Typ = TypOdliczania.Tydzień;
+                        break;
+                    case 4:
+                        element.Typ = TypOdliczania.Dzień;
+                        break;
+                    default:
+                        element.Typ = TypOdliczania.Rok;
+                        break;
+
+                }
+                element.Cykliczne = true;
+                element.CzyCykliczne = "TAK";
+                Service.GetInstance().ZmienDateDlaOdliczenia(element);
+                Service.GetInstance().Oblicz(element);
             }
             else
             {
-                MessageBox.Show("Nazwa nie może być pusta");
+                element.Cykliczne = false;
+                element.CzyCykliczne = "NIE";
+                Service.GetInstance().Oblicz(element);
+                if (element.DataOdliczania < DateTime.Now)
+                {
+                    element.Typ = TypOdliczania.Upłynął;
+                }
+                else
+                {
+                    element.Typ = TypOdliczania.Jednorazowe;
+                }  
             }
+            success = true;
+            this.Close();
         }
         private void buttonOpusc_Click(object sender, RoutedEventArgs e)
         {
@@ -72,7 +99,10 @@ namespace ProjektWPF
         private void cykl_Checked(object sender, RoutedEventArgs e)
         {
              typCyklu.IsEnabled = true;
-             element.CzyCykliczne = "TAK"; 
+        }
+        private void cykl_Unchecked(object sender, RoutedEventArgs e)
+        {
+             typCyklu.IsEnabled = false;
         }
         public List<string> NumeryCzasowe(int numer)
         {

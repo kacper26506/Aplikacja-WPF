@@ -7,17 +7,17 @@
         mc:Ignorable="d"
         Title="Historia" Height="463" Width="800">
     <Grid>
-        <ListView x:Name="listViewPamietnik" Margin="0,47,0,170">
+        <ListView x:Name="listViewPamietnik" Margin="0,98,0,119">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Data wydarzenia" Width="120"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Nazwa wydarzenia" Width="350"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Cykliczne" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=X}" Header="Typ odliczania" Width="230"/>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Nazwa}" Header="Nazwa wydarzenia" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Data}" Header="Data wydarzenia" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CzyCykliczne}" Header="Cykliczne" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Typ}" Header="Typ odliczania" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Button x:Name="buttonOpusc" Content="Wyjdź" HorizontalAlignment="Left" Margin="691,361,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="75"/>
+        <Label x:Name="labelCurrentTime" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="68" Width="693"/>
     </Grid>
 </Window>
