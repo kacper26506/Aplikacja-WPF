@@ -1,17 +1,2 @@
 <?xml version="1.0"?>
-<ArrayOfWydarzeniaDM xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <WydarzeniaDM>
-    <ID>c7918b3d-d6aa-422d-a7a9-d127ad83b5d1</ID>
-    <Nazwa>TVN</Nazwa>
-    <DataOdliczania>2023-08-13T19:47:06.9330541+02:00</DataOdliczania>
-    <Cykliczne>false</Cykliczne>
-    <CzyCykliczne>NIE</CzyCykliczne>
-  </WydarzeniaDM>
-  <WydarzeniaDM>
-    <ID>c965a9de-6578-4542-ad4b-859855868701</ID>
-    <Nazwa>TVP</Nazwa>
-    <DataOdliczania>2023-08-15T09:57:18.7345733+02:00</DataOdliczania>
-    <Cykliczne>false</Cykliczne>
-    <CzyCykliczne>NIE</CzyCykliczne>
-  </WydarzeniaDM>
-</ArrayOfWydarzeniaDM>
+<ArrayOfWydarzeniaDM xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />

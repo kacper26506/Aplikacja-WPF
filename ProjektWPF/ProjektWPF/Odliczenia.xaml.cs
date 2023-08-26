@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,10 +28,29 @@ namespace ProjektWPF
         {
             InitializeComponent();
             SformatujIWyswietlDate();
-            service = new Service();
+            service = Service.GetInstance();
             List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
             for (int i=0; i<service.Wydarzenia.Count; i++)
             {
+                WydarzenieModel element = ListaWydarzen[i];
+                if (element.DataOdliczania < DateTime.Now)
+                {
+                    if (element.Cykliczne)
+                    {
+                        service.ZmienDateDlaOdliczeniaIWpiszDoHistorii(element);
+                        service.Oblicz(element);
+                        service.EdytujWydarzenie(element);
+                    }
+                    else
+                    {
+                        element.Typ = TypOdliczania.Upłynął;
+                        service.Oblicz(element);
+                        service.EdytujWydarzenie(element);
+                        ServiceHistory.GetInstance().DodajdoHistorii(element);
+                        service.UsunWydarzenie(element.ID);
+                        listViewOdliczenia.Items.Remove(element);
+                    }
+                }
                 listViewOdliczenia.Items.Add(ListaWydarzen[i]);
             }
         }
@@ -42,8 +62,15 @@ namespace ProjektWPF
             dodawanieEdycjaWydarzen.ShowDialog();
             if (dodawanieEdycjaWydarzen.Success)
             {
-                listViewOdliczenia.Items.Add(service.DodajWydarzenie(dodawanieEdycjaWydarzen.element));
-            }           
+                if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                {
+                    listViewOdliczenia.Items.Add(service.DodajWydarzenie(dodawanieEdycjaWydarzen.element));
+                }
+                else
+                {
+                    ServiceHistory.GetInstance().DodajdoHistorii(dodawanieEdycjaWydarzen.element);
+                }    
+            }
         }
 
         private void buttonEdytujWydarzenie_Click(object sender, RoutedEventArgs e)
@@ -58,11 +85,20 @@ namespace ProjektWPF
                     dodawanieEdycjaWydarzen.ShowDialog();
                     if (dodawanieEdycjaWydarzen.Success)
                     {
-                        int index = listViewOdliczenia.Items.IndexOf(element);
-                        listViewOdliczenia.Items.RemoveAt(index);
-                        listViewOdliczenia.Items.Insert(index, item);
-                        listViewOdliczenia.Items.Refresh();
-                        service.EdytujWydarzenie(element);
+                        if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                        {
+                            int index = listViewOdliczenia.Items.IndexOf(element);
+                            listViewOdliczenia.Items.RemoveAt(index);
+                            listViewOdliczenia.Items.Insert(index, item);
+                            listViewOdliczenia.Items.Refresh();
+                            service.EdytujWydarzenie(item);
+                        }
+                        else
+                        {
+                            ServiceHistory.GetInstance().DodajdoHistorii(item);
+                            service.UsunWydarzenie(item.ID);
+                            listViewOdliczenia.Items.Remove(item);
+                        }    
                     }
                 }
                 else

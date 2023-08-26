@@ -11,10 +11,11 @@
         <ListView x:Name="listViewOdliczenia"  Margin="0,108,0,174">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Nazwa}" Header="Nazwa wydarzenia" Width="250"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Data}" Header="Data wydarzenia" Width="170"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CzyCykliczne}" Header="Cykliczne" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="230"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Nazwa}" Header="Nazwa wydarzenia" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Data}" Header="Data wydarzenia" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CzyCykliczne}" Header="Cykliczne" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Typ}" Header="Typ odliczania" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=IleDni}" Header="Ile dni zostało" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>

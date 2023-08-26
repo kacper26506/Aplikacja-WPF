@@ -13,11 +13,19 @@ namespace ProjektWPF.Serwis
 {
     public class Service
     {
-        
         private List<WydarzeniaDM> listDM;
-        public Service()
+        private static Service instance;
+        private Service()
         {
             Load();
+        }
+        public static Service GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Service();
+            }
+            return instance;
         }
         public List<WydarzenieModel> Wydarzenia
         {
@@ -31,6 +39,13 @@ namespace ProjektWPF.Serwis
                 return list;
             }
         }
+        public WydarzenieModel DodajWydarzenie(WydarzenieModel item)
+        {
+            WydarzeniaDM element = Convert(item);
+            listDM.Add(element);
+            Save();
+            return item;
+        }
         public void EdytujWydarzenie(WydarzenieModel item)
         {
             for (int i = 0; i < listDM.Count; i++)
@@ -42,6 +57,8 @@ namespace ProjektWPF.Serwis
                     listDM[i].Nazwa = item.Nazwa;
                     listDM[i].ID = item.ID;
                     listDM[i].DataOdliczania = item.DataOdliczania;
+                    listDM[i].Typ = item.Typ;
+                    listDM[i].IleDni = item.IleDni;
                     Save();
                     return;
                 }
@@ -59,15 +76,69 @@ namespace ProjektWPF.Serwis
                 }
             }
         }
-        public WydarzenieModel DodajWydarzenie(WydarzenieModel item)
+        public void Oblicz(WydarzenieModel item)
         {
-            WydarzeniaDM element = Convert(item);
-            listDM.Add(element);
-            Save();
-            return item;
+            DateTime DataPoczatkowa = DateTime.Now;
+            item.IleDni = 0;
+            while (DataPoczatkowa < item.DataOdliczania)
+            {
+                DataPoczatkowa = DataPoczatkowa.AddDays(1);
+                item.IleDni++;
+            }
         }
-
-
+        public void ZmienDateDlaOdliczenia(WydarzenieModel item)
+        {
+            while (item.DataOdliczania < DateTime.Now)
+            {
+                switch (item.Typ)
+                {
+                    case TypOdliczania.Rok:
+                        item.DataOdliczania = item.DataOdliczania.AddYears(1);
+                        break;
+                    case TypOdliczania.Kwartał:
+                        item.DataOdliczania = item.DataOdliczania.AddMonths(3);
+                        break;
+                    case TypOdliczania.Miesiąc:
+                        item.DataOdliczania = item.DataOdliczania.AddMonths(1);
+                        break;
+                    case TypOdliczania.Tydzień:
+                        item.DataOdliczania = item.DataOdliczania.AddDays(7);
+                        break;
+                    case TypOdliczania.Dzień:
+                        item.DataOdliczania = item.DataOdliczania.AddDays(1);
+                        break;
+                }
+            }
+        }
+        public void ZmienDateDlaOdliczeniaIWpiszDoHistorii(WydarzenieModel item)
+        {
+            while (item.DataOdliczania < DateTime.Now)
+            {
+                switch (item.Typ)
+                {
+                    case TypOdliczania.Rok:
+                        ServiceHistory.GetInstance().DodajdoHistorii(item);
+                        item.DataOdliczania = item.DataOdliczania.AddYears(1);
+                        break;
+                    case TypOdliczania.Kwartał:
+                        ServiceHistory.GetInstance().DodajdoHistorii(item);
+                        item.DataOdliczania = item.DataOdliczania.AddMonths(3);
+                        break;
+                    case TypOdliczania.Miesiąc:
+                        ServiceHistory.GetInstance().DodajdoHistorii(item);
+                        item.DataOdliczania = item.DataOdliczania.AddMonths(1);
+                        break;
+                    case TypOdliczania.Tydzień:
+                        ServiceHistory.GetInstance().DodajdoHistorii(item);
+                        item.DataOdliczania = item.DataOdliczania.AddDays(7);
+                        break;
+                    case TypOdliczania.Dzień:
+                        ServiceHistory.GetInstance().DodajdoHistorii(item);
+                        item.DataOdliczania = item.DataOdliczania.AddDays(1);
+                        break;
+                }
+            }
+        }
         private void Load()
         {
             if (File.Exists("WydarzeniaData.xml"))
@@ -79,10 +150,12 @@ namespace ProjektWPF.Serwis
                 listDM = new List<WydarzeniaDM>();
             }
         }
+        
         private void Save()
         {
             Serialize<WydarzeniaDM>(listDM, "WydarzeniaData.xml") ;
         }
+        
         static List<T> Deserialize<T>(string fileName)
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(List<T>));
@@ -91,8 +164,6 @@ namespace ProjektWPF.Serwis
             reader.Close();
             return (List<T>)obj;
         }
-
-
         static void Serialize<T>(List<T> list, string fileName)
         {
             if (File.Exists(fileName))
@@ -117,9 +188,10 @@ namespace ProjektWPF.Serwis
             element.DataOdliczania = item.DataOdliczania;
             element.Cykliczne = item.Cykliczne;
             element.CzyCykliczne = item.CzyCykliczne;
+            element.Typ = item.Typ;
+            element.IleDni = item.IleDni;
             return element;
         }
-
         WydarzenieModel ConvertToListItemVM(WydarzeniaDM item)
         {
             WydarzenieModel element = new WydarzenieModel();
@@ -128,8 +200,9 @@ namespace ProjektWPF.Serwis
             element.DataOdliczania = item.DataOdliczania;
             element.Cykliczne = item.Cykliczne;
             element.CzyCykliczne = item.CzyCykliczne;
+            element.Typ = item.Typ;
+            element.IleDni = item.IleDni;
             return element;
         }
-
     }
 }
