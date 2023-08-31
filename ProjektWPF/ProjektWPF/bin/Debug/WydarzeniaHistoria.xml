@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ArrayOfDaneHistoryczne xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DaneHistoryczne>
+    <ID>792bd51e-165d-4046-a0d4-8427e65ddf6a</ID>
+    <Nazwa>TVN Szurbo</Nazwa>
+    <DataOdliczania>2023-08-29T00:00:00</DataOdliczania>
+    <CzyCykliczne>NIE</CzyCykliczne>
+    <Typ>Upłynął</Typ>
+  </DaneHistoryczne>
+</ArrayOfDaneHistoryczne>

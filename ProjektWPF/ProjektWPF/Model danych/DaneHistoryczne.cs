@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProjektWPF.Model_danych
 {
-    public class WydarzeniaDM
+    public class DaneHistoryczne
     {
         public Guid ID { get; set; }
         public string Nazwa { get; set; }
         public DateTime DataOdliczania { get; set; }
-        public bool Cykliczne { get; set; }
         public string CzyCykliczne { get; set; }
         public TypOdliczania Typ { get; set; }
-        public int IleDni { get; set; }
         public string Data
         {
             get

@@ -14,7 +14,7 @@
         <TextBox x:Name="nazwaWydarzenia" HorizontalAlignment="Left" Height="23" Margin="151,25,0,0" Text="{Binding Path=Nazwa}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
         <Label Content="Cykliczne:" HorizontalAlignment="Left" Margin="40,128,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="122"/>
         <Label Content="Typ odliczania:" HorizontalAlignment="Left" Margin="40,180,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="166"/>
-        <CheckBox x:Name="cykl" HorizontalAlignment="Left" Margin="167,139,0,0" VerticalAlignment="Top" Checked="cykl_Checked"/>
+        <CheckBox x:Name="cykl" HorizontalAlignment="Left" Margin="167,139,0,0" VerticalAlignment="Top" Checked="cykl_Checked" Unchecked="cykl_Unchecked"/>
         <ComboBox x:Name="typCyklu" HorizontalAlignment="Left" Margin="228,180,0,0" VerticalAlignment="Top" Width="257" Height="38" FontFamily="Arial" FontSize="24">
             <ComboBoxItem Content="Rok"/>
             <ComboBoxItem Content="Kwartał"/>

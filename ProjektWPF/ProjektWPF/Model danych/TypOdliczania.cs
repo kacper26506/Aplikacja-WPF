@@ -8,6 +8,6 @@ namespace ProjektWPF.Model_danych
 {
     public enum TypOdliczania
     {
-        Jednorazowe, Rok, Kwartał, Miesiąc, Tydzień, Dzień
+        Jednorazowe, Rok, Kwartał, Miesiąc, Tydzień, Dzień, Upłynął
     }
 }
