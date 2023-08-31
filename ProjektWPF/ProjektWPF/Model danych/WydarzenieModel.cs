@@ -17,13 +17,16 @@ namespace ProjektWPF.Model_danych
         public bool Cykliczne { get; set; }
         public string CzyCykliczne { get; set; }
         public TypOdliczania Typ { get; set; }
+        public int IleDni { get; set; }
         public WydarzenieModel()
         {
             this.ID = Guid.NewGuid();
-            this.Nazwa = "";
+            this.Nazwa = "TVN Szurbo";
             this.DataOdliczania = DateTime.Now;
             this.Cykliczne = false;
             this.CzyCykliczne = "NIE";
+            this.Typ = TypOdliczania.Jednorazowe;
+            this.IleDni = 0;
         }
         public WydarzenieModel(WydarzenieModel model)
         {
@@ -32,6 +35,8 @@ namespace ProjektWPF.Model_danych
             this.DataOdliczania = model.DataOdliczania;
             this.Cykliczne = model.Cykliczne;
             this.CzyCykliczne = model.CzyCykliczne;
+            this.Typ = model.Typ;
+            this.IleDni = model.IleDni;
         }
         public string Data
         {
