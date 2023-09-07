@@ -59,6 +59,7 @@ namespace ProjektWPF.Serwis
                     listDM[i].DataOdliczania = item.DataOdliczania;
                     listDM[i].Typ = item.Typ;
                     listDM[i].IleDni = item.IleDni;
+                    listDM[i].Obrazek = item.Obrazek;
                     Save();
                     return;
                 }
@@ -190,6 +191,7 @@ namespace ProjektWPF.Serwis
             element.CzyCykliczne = item.CzyCykliczne;
             element.Typ = item.Typ;
             element.IleDni = item.IleDni;
+            element.Obrazek = item.Obrazek;
             return element;
         }
         WydarzenieModel ConvertToListItemVM(WydarzeniaDM item)
@@ -202,6 +204,8 @@ namespace ProjektWPF.Serwis
             element.CzyCykliczne = item.CzyCykliczne;
             element.Typ = item.Typ;
             element.IleDni = item.IleDni;
+            element.Obrazek = item.Obrazek;
+            element.Obraz = element.DodajObrazek(element.Obrazek);
             return element;
         }
     }

@@ -37,6 +37,7 @@ namespace ProjektWPF
             typCyklu.IsEnabled = model.Cykliczne;
             typCyklu.DataContext = model;
             model.CzyCykliczne = model.CzyCykliczne;
+            imageWydarzenia.DataContext = model;
             this.element = model;
         }
         private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
@@ -125,6 +126,37 @@ namespace ProjektWPF
             {
                 return success;
             }
+        }
+
+        private void buttonObrazek_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure save file dialog box
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.InitialDirectory = NadajSciezke();
+            dialog.DefaultExt = ".bmp"; // Default file extension
+            dialog.Filter = "Bitmap image (.bmp)|*.bmp"; // Filter files by extension
+            
+
+            // Show save file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dialog.FileName;
+                filename = filename.Substring(filename.LastIndexOf('\\') + 1);
+                element.Obrazek = filename;
+                element.Obraz = element.DodajObrazek(element.Obrazek);
+                imageWydarzenia.DataContext = element;
+            }
+        }
+        private string NadajSciezke()
+        {
+            string sciezka = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            sciezka = sciezka.Substring(0, sciezka.LastIndexOf('\\') + 1);
+            sciezka += "obrazki\\";
+            return sciezka;
         }
     }
 }

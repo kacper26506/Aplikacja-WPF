@@ -1,10 +1,34 @@
 <?xml version="1.0"?>
 <ArrayOfDaneHistoryczne xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DaneHistoryczne>
-    <ID>792bd51e-165d-4046-a0d4-8427e65ddf6a</ID>
+    <ID>709b5557-1252-4202-a199-a09422145962</ID>
     <Nazwa>TVN Szurbo</Nazwa>
-    <DataOdliczania>2023-08-29T00:00:00</DataOdliczania>
+    <DataOdliczania>2023-09-04T17:44:38.9590871+02:00</DataOdliczania>
     <CzyCykliczne>NIE</CzyCykliczne>
     <Typ>Upłynął</Typ>
+  </DaneHistoryczne>
+  <DaneHistoryczne>
+    <ID>afb68b14-023c-4b47-9796-336b469c5340</ID>
+    <Nazwa>TVN Szurbo</Nazwa>
+    <DataOdliczania>2023-09-04T18:46:13.8433307+02:00</DataOdliczania>
+    <CzyCykliczne>NIE</CzyCykliczne>
+    <Typ>Upłynął</Typ>
+    <Obrazek>\B.bmp</Obrazek>
+  </DaneHistoryczne>
+  <DaneHistoryczne>
+    <ID>c4c4aea8-6f46-4a28-b398-ccfc51c61f8d</ID>
+    <Nazwa>TVN Szurbo</Nazwa>
+    <DataOdliczania>2023-09-04T19:07:09.9289964+02:00</DataOdliczania>
+    <CzyCykliczne>NIE</CzyCykliczne>
+    <Typ>Upłynął</Typ>
+    <Obrazek>B.bmp</Obrazek>
+  </DaneHistoryczne>
+  <DaneHistoryczne>
+    <ID>78307464-dea9-4b6d-8ffb-bf8d005c23b2</ID>
+    <Nazwa>TMT</Nazwa>
+    <DataOdliczania>2023-09-07T05:05:00</DataOdliczania>
+    <CzyCykliczne>TAK</CzyCykliczne>
+    <Typ>Dzień</Typ>
+    <Obrazek>B.bmp</Obrazek>
   </DaneHistoryczne>
 </ArrayOfDaneHistoryczne>

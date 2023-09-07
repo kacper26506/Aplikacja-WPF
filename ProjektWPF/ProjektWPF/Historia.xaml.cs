@@ -27,6 +27,10 @@ namespace ProjektWPF
         {
             InitializeComponent();
             SformatujIWyswietlDate();
+            ZaladujDane();
+        }
+        private void ZaladujDane()
+        {
             service = ServiceHistory.GetInstance();
             List<WydarzenieModel> ListaWydarzen = service.Historia;
             for (int i = 0; i < service.Historia.Count; i++)

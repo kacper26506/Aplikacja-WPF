@@ -28,9 +28,13 @@ namespace ProjektWPF
         {
             InitializeComponent();
             SformatujIWyswietlDate();
+            ZaladujDane();
+        }
+        private void ZaladujDane()
+        {
             service = Service.GetInstance();
             List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
-            for (int i=0; i<service.Wydarzenia.Count; i++)
+            for (int i = 0; i < service.Wydarzenia.Count; i++)
             {
                 WydarzenieModel element = ListaWydarzen[i];
                 if (element.DataOdliczania < DateTime.Now)
@@ -51,10 +55,11 @@ namespace ProjektWPF
                         listViewOdliczenia.Items.Remove(element);
                     }
                 }
+                service.Oblicz(element);
                 listViewOdliczenia.Items.Add(ListaWydarzen[i]);
             }
+
         }
-        
         private void buttonDodajWydarzenie_Click(object sender, RoutedEventArgs e)
         {
             WydarzenieModel item = new WydarzenieModel();
@@ -79,26 +84,33 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    WydarzenieModel element = (WydarzenieModel)listViewOdliczenia.SelectedItem;
-                    WydarzenieModel item = new WydarzenieModel(element);
-                    DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen(item);
-                    dodawanieEdycjaWydarzen.ShowDialog();
-                    if (dodawanieEdycjaWydarzen.Success)
+                    if (listViewOdliczenia.SelectedItem != null)
                     {
-                        if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                        WydarzenieModel element = (WydarzenieModel)listViewOdliczenia.SelectedItem;
+                        WydarzenieModel item = new WydarzenieModel(element);
+                        DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen(item);
+                        dodawanieEdycjaWydarzen.ShowDialog();
+                        if (dodawanieEdycjaWydarzen.Success)
                         {
-                            int index = listViewOdliczenia.Items.IndexOf(element);
-                            listViewOdliczenia.Items.RemoveAt(index);
-                            listViewOdliczenia.Items.Insert(index, item);
-                            listViewOdliczenia.Items.Refresh();
-                            service.EdytujWydarzenie(item);
+                            if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                            {
+                                int index = listViewOdliczenia.Items.IndexOf(element);
+                                listViewOdliczenia.Items.RemoveAt(index);
+                                listViewOdliczenia.Items.Insert(index, item);
+                                listViewOdliczenia.Items.Refresh();
+                                service.EdytujWydarzenie(item);
+                            }
+                            else
+                            {
+                                ServiceHistory.GetInstance().DodajdoHistorii(item);
+                                service.UsunWydarzenie(item.ID);
+                                listViewOdliczenia.Items.Remove(item);
+                            }
                         }
-                        else
-                        {
-                            ServiceHistory.GetInstance().DodajdoHistorii(item);
-                            service.UsunWydarzenie(item.ID);
-                            listViewOdliczenia.Items.Remove(item);
-                        }    
+                    }
+                    else
+                    {
+                        MessageBox.Show("Edycja pustych obiektów jest niedozwolona");
                     }
                 }
                 else
@@ -119,9 +131,16 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
-                    service.UsunWydarzenie(item.ID);
-                    listViewOdliczenia.Items.Remove(item);
+                    if (listViewOdliczenia.SelectedItem != null)
+                    {
+                        WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
+                        service.UsunWydarzenie(item.ID);
+                        listViewOdliczenia.Items.Remove(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuwanie pustych obiektów jest niedozwolone");
+                    }
                 }
                 else
                 {
