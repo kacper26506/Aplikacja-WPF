@@ -9,9 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using ProjektWPF.Czas;
 using ProjektWPF.Model_danych;
 using ProjektWPF.Serwis;
@@ -24,11 +26,35 @@ namespace ProjektWPF
     public partial class Odliczenia : Window
     {
         Service service;
+        Data data;
         public Odliczenia()
         {
             InitializeComponent();
-            SformatujIWyswietlDate();
+            SformatujWyswietlIAktualizujDate();
             ZaladujDane();
+        }
+        private void SformatujWyswietlIAktualizujDate()
+        {
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            DateTime CurrentTime = DateTime.Now;
+            data = new Data();
+            data.Dzien = CurrentTime.Day;
+            data.Rok = CurrentTime.Year;
+            data.Godzina = data.UstawNumer(CurrentTime.Hour);
+            data.Minuta = data.UstawNumer(CurrentTime.Minute);
+            data.Sekunda = data.UstawNumer(CurrentTime.Second);
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
+            Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            data.Sekunda;
+            //tutaj sa funkcje aktualizujace wszystkie rzeczy
+            //1 - label z data i czasem
+            //2 - aktualizacja listy odliczań
         }
         private void ZaladujDane()
         {
@@ -84,8 +110,6 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    if (listViewOdliczenia.SelectedItem != null)
-                    {
                         WydarzenieModel element = (WydarzenieModel)listViewOdliczenia.SelectedItem;
                         WydarzenieModel item = new WydarzenieModel(element);
                         DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen(item);
@@ -107,11 +131,6 @@ namespace ProjektWPF
                                 listViewOdliczenia.Items.Remove(item);
                             }
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Edycja pustych obiektów jest niedozwolona");
-                    }
                 }
                 else
                 {
@@ -131,16 +150,9 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    if (listViewOdliczenia.SelectedItem != null)
-                    {
                         WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
                         service.UsunWydarzenie(item.ID);
                         listViewOdliczenia.Items.Remove(item);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Usuwanie pustych obiektów jest niedozwolone");
-                    }
                 }
                 else
                 {

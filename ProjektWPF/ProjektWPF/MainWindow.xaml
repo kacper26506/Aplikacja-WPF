@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="Odliczanie" HorizontalAlignment="Left" Margin="297,10,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36"/>
         <Button x:Name="buttonOdliczenia" Content="Odliczenia" HorizontalAlignment="Left" Height="34" Margin="78,72,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonOdliczenia_Click"/>
-        <Button x:Name="buttonWydarzenia" Content="Historia" HorizontalAlignment="Left" Height="34" Margin="558,65,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonWydarzenia_Click"/>
+        <Button x:Name="buttonWydarzenia" Content="Historia" HorizontalAlignment="Left" Height="34" Margin="550,72,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonWydarzenia_Click"/>
         <Label x:Name="labelCurrentTime"  HorizontalAlignment="Left" Margin="24,125,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="72" Width="752" Grid.ColumnSpan="2"/>
         <ListView x:Name="listWydarzenie" VerticalAlignment="Top" Margin="50,234,78,0" Height="280">
             <ItemsControl.ItemsPanel>
@@ -20,7 +20,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Image Source="{Binding Obraz}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
+                        <Image Source="{Binding Obraz}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" Height="150" Width="150"/>
                         <TextBlock Text="{Binding PelnaNazwa}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </DataTemplate>

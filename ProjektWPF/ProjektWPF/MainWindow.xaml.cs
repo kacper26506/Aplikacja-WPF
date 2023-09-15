@@ -13,6 +13,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using System.Xml.Linq;
 using ProjektWPF.Czas;
 using ProjektWPF.Model_danych;
 using ProjektWPF.Serwis;
@@ -25,21 +27,51 @@ namespace ProjektWPF
     public partial class MainWindow : Window
     {
         Service service;
-        Data data;
         public MainWindow()
         {
             InitializeComponent();
-            SformatujIWyswietlDate();
+            SformatujWyswietlIAktualizujDate();
             ZaladujDane();
         }
-        private void AktualizujCzas()
+        private void SformatujWyswietlIAktualizujDate()
         {
-
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            DateTime CurrentTime = DateTime.Now;
+            Data data = new Data();
+            data.Dzien = CurrentTime.Day;
+            data.Rok = CurrentTime.Year;
+            data.Godzina = data.UstawNumer(CurrentTime.Hour);
+            data.Minuta = data.UstawNumer(CurrentTime.Minute);
+            data.Sekunda = data.UstawNumer(CurrentTime.Second);
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
+            Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            data.Sekunda;
+            //tutaj sa funkcje aktualizujace wszystkie rzeczy
+            //1 - label z data i czasem
+            //2 - aktualizacja listy odliczań
 
-            labelCurrentTime.Content = DateTime.Now.ToString();
+        }
+        private void AktualizujCzas()
+        {
+                DispatcherTimer dispatcherTimer2 = new DispatcherTimer();
+                dispatcherTimer2.Tick += dispatcherTimer_Tick2;
+                dispatcherTimer2.Interval = new TimeSpan(0, 0, 1);
+                dispatcherTimer2.Start();
+        }
+        private void dispatcherTimer_Tick2(object sender, EventArgs e)
+        {
+            List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
+            for (int i = 0; i < listWydarzenie.Items.Count; i++)
+            {
+                WydarzenieModel element = ListaWydarzen[i];
+                element.PelnaNazwa = element.Nazwa + " " + PozostalyCzas(element.DataOdliczania);
+            }
             //tutaj sa funkcje aktualizujace wszystkie rzeczy
             //1 - label z data i czasem
             //2 - aktualizacja listy odliczań
@@ -110,25 +142,11 @@ namespace ProjektWPF
             PelnaNazwa += " sek";
             return PelnaNazwa;
         }
-        private void SformatujIWyswietlDate()
-        {
-            DateTime CurrentTime = DateTime.Now;
-            data = new Data();
-            data.Dzien = CurrentTime.Day;
-            data.Rok = CurrentTime.Year;
-            data.Godzina = data.UstawNumer(CurrentTime.Hour);
-            data.Minuta = data.UstawNumer(CurrentTime.Minute);
-            data.Sekunda = data.UstawNumer(CurrentTime.Second);
-            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
-            Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
-            data.Sekunda;
-        }
         private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)
         {
             Odliczenia odliczenia = new Odliczenia();
             odliczenia.ShowDialog();
         }
-
         private void buttonWydarzenia_Click(object sender, RoutedEventArgs e)
         {
             Historia historia = new Historia();

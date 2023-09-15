@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,23 +131,38 @@ namespace ProjektWPF
 
         private void buttonObrazek_Click(object sender, RoutedEventArgs e)
         {
-            // Configure save file dialog box
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.InitialDirectory = NadajSciezke();
-            dialog.DefaultExt = ".bmp"; // Default file extension
-            dialog.Filter = "Bitmap image (.bmp)|*.bmp"; // Filter files by extension
-            
+            dialog.DefaultExt = ".jpg";
+            dialog.Filter = "JPEG (.jpg) | *.jpg|PNG (.png) | *.png|Bitmap image (.bmp) | *.bmp|GIF (.gif) | *.gif";
+            bool ? result = dialog.ShowDialog();
 
-            // Show save file dialog box
-            bool? result = dialog.ShowDialog();
-
-            // Process save file dialog box results
             if (result == true)
             {
-                // Save document
                 string filename = dialog.FileName;
                 filename = filename.Substring(filename.LastIndexOf('\\') + 1);
                 element.Obrazek = filename;
+                element.Obraz = element.DodajObrazek(element.Obrazek);
+                imageWydarzenia.DataContext = element;
+            }
+        }
+        private void buttonUtworzObrazek_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Image";
+            dialog.InitialDirectory = NadajSciezke();
+            dialog.DefaultExt = ".jpg";
+            dialog.Filter = "JPEG (.jpg) | *.jpg|PNG (.png) | *.png|Bitmap image (.bmp) | *.bmp|GIF (.gif) | *.gif";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = dialog.FileName;
+                string format = filename.Substring(filename.LastIndexOf('.') + 1);
+                string targetfilename = NadajSciezke();
+                targetfilename += element.ID.ToString() + "." + format;
+                File.Copy(filename, targetfilename);
+                targetfilename = element.ID.ToString() + "." + format;
+                element.Obrazek = targetfilename;
                 element.Obraz = element.DodajObrazek(element.Obrazek);
                 imageWydarzenia.DataContext = element;
             }
