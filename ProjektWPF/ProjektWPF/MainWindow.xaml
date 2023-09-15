@@ -5,12 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjektWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="636" Width="800">
     <Grid>
-        <Label Content="Odliczanie" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36"/>
-        <Button x:Name="buttonOdliczenia" Content="Odliczenia" HorizontalAlignment="Left" Height="34" Margin="120,254,0,0" VerticalAlignment="Top" Width="149" FontFamily="Arial" FontSize="24" Click="buttonOdliczenia_Click"/>
-        <Button x:Name="buttonWydarzenia" Content="Historia" HorizontalAlignment="Left" Height="34" Margin="508,254,0,0" VerticalAlignment="Top" Width="149" FontFamily="Arial" FontSize="24" Click="buttonWydarzenia_Click"/>
-        <Label x:Name="labelCurrentTime"  HorizontalAlignment="Center" Margin="0,99,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="72" Width="753"/>
-
+        <Label Content="Odliczanie" HorizontalAlignment="Left" Margin="297,10,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36"/>
+        <Button x:Name="buttonOdliczenia" Content="Odliczenia" HorizontalAlignment="Left" Height="34" Margin="78,72,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonOdliczenia_Click"/>
+        <Button x:Name="buttonWydarzenia" Content="Historia" HorizontalAlignment="Left" Height="34" Margin="550,72,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonWydarzenia_Click"/>
+        <Label x:Name="labelCurrentTime"  HorizontalAlignment="Left" Margin="24,125,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="36" Height="72" Width="752" Grid.ColumnSpan="2"/>
+        <ListView x:Name="listWydarzenie" VerticalAlignment="Top" Margin="50,234,78,0" Height="280">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="5" HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Image Source="{Binding Obraz}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" Height="150" Width="150"/>
+                        <TextBlock Text="{Binding PelnaNazwa}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

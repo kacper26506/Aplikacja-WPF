@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 
 namespace ProjektWPF.Model_danych
 {
@@ -18,6 +19,9 @@ namespace ProjektWPF.Model_danych
         public string CzyCykliczne { get; set; }
         public TypOdliczania Typ { get; set; }
         public int IleDni { get; set; }
+        public string Obrazek { get; set; }
+        public BitmapImage Obraz { get; set; }
+        public string PelnaNazwa { get; set; }
         public WydarzenieModel()
         {
             this.ID = Guid.NewGuid();
@@ -27,6 +31,8 @@ namespace ProjektWPF.Model_danych
             this.CzyCykliczne = "NIE";
             this.Typ = TypOdliczania.Jednorazowe;
             this.IleDni = 0;
+            this.Obrazek = "R.bmp";
+            this.Obraz = DodajObrazek(Obrazek);
         }
         public WydarzenieModel(WydarzenieModel model)
         {
@@ -37,6 +43,19 @@ namespace ProjektWPF.Model_danych
             this.CzyCykliczne = model.CzyCykliczne;
             this.Typ = model.Typ;
             this.IleDni = model.IleDni;
+            this.Obrazek = model.Obrazek;
+            this.Obraz = DodajObrazek(Obrazek);
+        }
+        public BitmapImage DodajObrazek(string nazwaPliku)
+        {
+            string sciezka = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            sciezka = sciezka.Substring(0, sciezka.LastIndexOf('\\') + 1);
+            sciezka += "obrazki\\" + nazwaPliku;
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(sciezka);
+            bitmap.EndInit();
+            return bitmap;
         }
         public string Data
         {

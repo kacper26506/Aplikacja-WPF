@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjektWPF"
         mc:Ignorable="d"
-        Title="DodawanieEdycjaWydarzen" Height="348" Width="588">
+        Title="DodawanieEdycjaWydarzen" Height="460" Width="588">
     <Grid>
-        <Button x:Name="buttonOpusc" Content="Wyjdź" HorizontalAlignment="Left" Margin="409,265,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="76" Height="32"/>
-        <Button x:Name="buttonPotwierdz" Content="OK" HorizontalAlignment="Left" Margin="512,265,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Width="48" Click="buttonPotwierdz_Click" Height="32"/>
+        <Button x:Name="buttonOpusc" Content="Wyjdź" HorizontalAlignment="Left" Margin="410,367,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonOpusc_Click" Width="76" Height="32"/>
+        <Button x:Name="buttonPotwierdz" Content="OK" HorizontalAlignment="Left" Margin="513,367,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Width="48" Click="buttonPotwierdz_Click" Height="32"/>
         <Label Content="Nazwa:" HorizontalAlignment="Left" Margin="40,18,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="90"/>
         <Label Content="Data:" HorizontalAlignment="Left" Margin="40,74,0,0" VerticalAlignment="Top" Background="{x:Null}" FontFamily="Arial" FontSize="24" Height="38" Width="67"/>
         <TextBox x:Name="nazwaWydarzenia" HorizontalAlignment="Left" Height="23" Margin="151,25,0,0" Text="{Binding Path=Nazwa}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
@@ -26,6 +26,8 @@
         <ComboBox x:Name="comboBoxGodziny" SelectedIndex="{Binding Hour}" HorizontalAlignment="Left" Margin="277,83,0,0" VerticalAlignment="Top" Width="57"/>
         <ComboBox x:Name="comboBoxMinuty"  SelectedIndex="{Binding Minute}" HorizontalAlignment="Left" Margin="366,83,0,0" VerticalAlignment="Top" Width="57"/>
         <Label Content=":" HorizontalAlignment="Left" Margin="344,81,0,0" VerticalAlignment="Top"/>
-
+        <Image x:Name="imageWydarzenia" Source ="{Binding Obraz}" HorizontalAlignment="Left" Height="150" Margin="63,251,0,0" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="buttonImage" Content="Zmień obrazek" HorizontalAlignment="Left" Margin="263,251,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonObrazek_Click" Width="185" Height="32"/>
+        <Button x:Name="buttonCreateImage" Content="Utwórz obrazek" HorizontalAlignment="Left" Margin="263,309,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="24" Click="buttonUtworzObrazek_Click" Width="185" Height="32"/>
     </Grid>
 </Window>

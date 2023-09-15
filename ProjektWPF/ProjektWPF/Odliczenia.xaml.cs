@@ -9,9 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using ProjektWPF.Czas;
 using ProjektWPF.Model_danych;
 using ProjektWPF.Serwis;
@@ -24,13 +26,41 @@ namespace ProjektWPF
     public partial class Odliczenia : Window
     {
         Service service;
+        Data data;
         public Odliczenia()
         {
             InitializeComponent();
-            SformatujIWyswietlDate();
+            SformatujWyswietlIAktualizujDate();
+            ZaladujDane();
+        }
+        private void SformatujWyswietlIAktualizujDate()
+        {
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            DateTime CurrentTime = DateTime.Now;
+            data = new Data();
+            data.Dzien = CurrentTime.Day;
+            data.Rok = CurrentTime.Year;
+            data.Godzina = data.UstawNumer(CurrentTime.Hour);
+            data.Minuta = data.UstawNumer(CurrentTime.Minute);
+            data.Sekunda = data.UstawNumer(CurrentTime.Second);
+            labelCurrentTime.Content = Data.DzienTygodnia[(int)CurrentTime.DayOfWeek] + ", " + data.Dzien + " " +
+            Data.NazwaMiesiaca[CurrentTime.Month - 1] + " " + data.Rok + " " + data.Godzina + ":" + data.Minuta + ":" +
+            data.Sekunda;
+            //tutaj sa funkcje aktualizujace wszystkie rzeczy
+            //1 - label z data i czasem
+            //2 - aktualizacja listy odliczań
+        }
+        private void ZaladujDane()
+        {
             service = Service.GetInstance();
             List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
-            for (int i=0; i<service.Wydarzenia.Count; i++)
+            for (int i = 0; i < service.Wydarzenia.Count; i++)
             {
                 WydarzenieModel element = ListaWydarzen[i];
                 if (element.DataOdliczania < DateTime.Now)
@@ -51,10 +81,11 @@ namespace ProjektWPF
                         listViewOdliczenia.Items.Remove(element);
                     }
                 }
+                service.Oblicz(element);
                 listViewOdliczenia.Items.Add(ListaWydarzen[i]);
             }
+
         }
-        
         private void buttonDodajWydarzenie_Click(object sender, RoutedEventArgs e)
         {
             WydarzenieModel item = new WydarzenieModel();
@@ -79,27 +110,27 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    WydarzenieModel element = (WydarzenieModel)listViewOdliczenia.SelectedItem;
-                    WydarzenieModel item = new WydarzenieModel(element);
-                    DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen(item);
-                    dodawanieEdycjaWydarzen.ShowDialog();
-                    if (dodawanieEdycjaWydarzen.Success)
-                    {
-                        if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                        WydarzenieModel element = (WydarzenieModel)listViewOdliczenia.SelectedItem;
+                        WydarzenieModel item = new WydarzenieModel(element);
+                        DodawanieEdycjaWydarzen dodawanieEdycjaWydarzen = new DodawanieEdycjaWydarzen(item);
+                        dodawanieEdycjaWydarzen.ShowDialog();
+                        if (dodawanieEdycjaWydarzen.Success)
                         {
-                            int index = listViewOdliczenia.Items.IndexOf(element);
-                            listViewOdliczenia.Items.RemoveAt(index);
-                            listViewOdliczenia.Items.Insert(index, item);
-                            listViewOdliczenia.Items.Refresh();
-                            service.EdytujWydarzenie(item);
+                            if (dodawanieEdycjaWydarzen.element.DataOdliczania > DateTime.Now)
+                            {
+                                int index = listViewOdliczenia.Items.IndexOf(element);
+                                listViewOdliczenia.Items.RemoveAt(index);
+                                listViewOdliczenia.Items.Insert(index, item);
+                                listViewOdliczenia.Items.Refresh();
+                                service.EdytujWydarzenie(item);
+                            }
+                            else
+                            {
+                                ServiceHistory.GetInstance().DodajdoHistorii(item);
+                                service.UsunWydarzenie(item.ID);
+                                listViewOdliczenia.Items.Remove(item);
+                            }
                         }
-                        else
-                        {
-                            ServiceHistory.GetInstance().DodajdoHistorii(item);
-                            service.UsunWydarzenie(item.ID);
-                            listViewOdliczenia.Items.Remove(item);
-                        }    
-                    }
                 }
                 else
                 {
@@ -119,9 +150,9 @@ namespace ProjektWPF
             {
                 if (listViewOdliczenia.SelectedItems.Count > 0)
                 {
-                    WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
-                    service.UsunWydarzenie(item.ID);
-                    listViewOdliczenia.Items.Remove(item);
+                        WydarzenieModel item = (WydarzenieModel)listViewOdliczenia.SelectedItem;
+                        service.UsunWydarzenie(item.ID);
+                        listViewOdliczenia.Items.Remove(item);
                 }
                 else
                 {

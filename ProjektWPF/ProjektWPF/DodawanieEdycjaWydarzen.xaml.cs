@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace ProjektWPF
             typCyklu.IsEnabled = model.Cykliczne;
             typCyklu.DataContext = model;
             model.CzyCykliczne = model.CzyCykliczne;
+            imageWydarzenia.DataContext = model;
             this.element = model;
         }
         private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
@@ -125,6 +127,52 @@ namespace ProjektWPF
             {
                 return success;
             }
+        }
+
+        private void buttonObrazek_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.InitialDirectory = NadajSciezke();
+            dialog.DefaultExt = ".jpg";
+            dialog.Filter = "JPEG (.jpg) | *.jpg|PNG (.png) | *.png|Bitmap image (.bmp) | *.bmp|GIF (.gif) | *.gif";
+            bool ? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dialog.FileName;
+                filename = filename.Substring(filename.LastIndexOf('\\') + 1);
+                element.Obrazek = filename;
+                element.Obraz = element.DodajObrazek(element.Obrazek);
+                imageWydarzenia.DataContext = element;
+            }
+        }
+        private void buttonUtworzObrazek_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Image";
+            dialog.InitialDirectory = NadajSciezke();
+            dialog.DefaultExt = ".jpg";
+            dialog.Filter = "JPEG (.jpg) | *.jpg|PNG (.png) | *.png|Bitmap image (.bmp) | *.bmp|GIF (.gif) | *.gif";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = dialog.FileName;
+                string format = filename.Substring(filename.LastIndexOf('.') + 1);
+                string targetfilename = NadajSciezke();
+                targetfilename += element.ID.ToString() + "." + format;
+                File.Copy(filename, targetfilename);
+                targetfilename = element.ID.ToString() + "." + format;
+                element.Obrazek = targetfilename;
+                element.Obraz = element.DodajObrazek(element.Obrazek);
+                imageWydarzenia.DataContext = element;
+            }
+        }
+        private string NadajSciezke()
+        {
+            string sciezka = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            sciezka = sciezka.Substring(0, sciezka.LastIndexOf('\\') + 1);
+            sciezka += "obrazki\\";
+            return sciezka;
         }
     }
 }

@@ -91,6 +91,7 @@ namespace ProjektWPF.Serwis
             element.DataOdliczania = item.DataOdliczania;
             element.CzyCykliczne = item.CzyCykliczne;
             element.Typ = item.Typ;
+            element.Obrazek = item.Obrazek;
             return element;
         }
         WydarzenieModel ConvertToListItemHistory(DaneHistoryczne item)
@@ -101,6 +102,7 @@ namespace ProjektWPF.Serwis
             element.DataOdliczania = item.DataOdliczania;
             element.CzyCykliczne = item.CzyCykliczne;
             element.Typ = item.Typ;
+            element.Obrazek = item.Obrazek;
             return element;
         }
     }
