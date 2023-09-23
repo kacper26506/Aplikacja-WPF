@@ -39,6 +39,70 @@ namespace ProjektWPF.Serwis
                 return list;
             }
         }
+        public List<WydarzenieModel> AktualizujWydarzenia(List<WydarzenieModel> listaWydarzen)
+        {
+            for (int i = 0; i < listaWydarzen.Count; i++)
+            {
+                WydarzenieModel element = listaWydarzen[i];
+                if (element.DataOdliczania < DateTime.Now)
+                {
+                    if (element.Cykliczne)
+                    {
+                        ZmienDateDlaOdliczeniaIWpiszDoHistorii(element);
+                        Oblicz(element);
+                        EdytujWydarzenie(element);
+                    }
+                    else
+                    {
+                        element.Typ = TypOdliczania.Upłynął;
+                        Oblicz(element);
+                        EdytujWydarzenie(element);
+                        ServiceHistory.GetInstance().DodajdoHistorii(element);
+                        UsunWydarzenie(element.ID);
+                        listaWydarzen.Remove(element);
+                        i--;
+                    }
+                }
+                Oblicz(element);
+                element.PelnaNazwa = element.Nazwa + " " + PozostalyCzas(element.DataOdliczania);
+            }
+            return listaWydarzen;
+        }
+        private string PozostalyCzas(DateTime czas)
+        {
+            int dni, godziny, minuty, sekundy;
+            DateTime CzasAktualny = DateTime.Now;
+            sekundy = 0;
+            while (CzasAktualny < czas)
+            {
+                CzasAktualny = CzasAktualny.AddSeconds(1);
+                sekundy++;
+            }
+            minuty = sekundy / 60;
+            godziny = minuty / 60;
+            dni = godziny / 24;
+            sekundy %= 60;
+            minuty %= 60;
+            godziny %= 24;
+            string PelnaNazwa = "Do wydarzenia zostało ";
+            switch (dni)
+            {
+                case 1:
+                    PelnaNazwa += "1 dzień ";
+                    break;
+                default:
+                    PelnaNazwa += dni;
+                    PelnaNazwa += " dni ";
+                    break;
+            }
+            PelnaNazwa += godziny;
+            PelnaNazwa += " godz ";
+            PelnaNazwa += minuty;
+            PelnaNazwa += " min ";
+            PelnaNazwa += sekundy;
+            PelnaNazwa += " sek";
+            return PelnaNazwa;
+        }
         public WydarzenieModel DodajWydarzenie(WydarzenieModel item)
         {
             WydarzeniaDM element = Convert(item);

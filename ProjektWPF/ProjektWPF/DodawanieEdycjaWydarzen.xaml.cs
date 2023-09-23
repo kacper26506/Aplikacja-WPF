@@ -44,10 +44,11 @@ namespace ProjektWPF
         private void buttonPotwierdz_Click(object sender, RoutedEventArgs e)
         {
             if (element.Nazwa.Length == 0)
-            { 
+            {
                 MessageBox.Show("Nazwa nie może być pusta");
                 return;
             }
+            Walidacja();
             if (cykl.IsChecked.HasValue && cykl.IsChecked.Value)
             {
                 switch (typCyklu.SelectedIndex)
@@ -93,6 +94,27 @@ namespace ProjektWPF
             }
             success = true;
             this.Close();
+        }
+        private void Walidacja()
+        {
+            List<WydarzenieModel> ListaWydarzen = Service.GetInstance().Wydarzenia;
+            int powtorzenie = 1;
+            for (int i=0;i<ListaWydarzen.Count;i++)
+            {
+                if (element.ID != ListaWydarzen[i].ID)
+                {
+                    if (element.Nazwa == ListaWydarzen[i].Nazwa)
+                    {
+                        powtorzenie++;
+                        if (powtorzenie > 2)
+                        {
+                            element.Nazwa = ListaWydarzen[i].Nazwa.Substring(0, ListaWydarzen[i].Nazwa.LastIndexOf(' '));
+                        }
+                        element.Nazwa += " ";
+                        element.Nazwa += powtorzenie;
+                    }
+                }
+            }
         }
         private void buttonOpusc_Click(object sender, RoutedEventArgs e)
         {
@@ -143,7 +165,7 @@ namespace ProjektWPF
                 filename = filename.Substring(filename.LastIndexOf('\\') + 1);
                 element.Obrazek = filename;
                 element.Obraz = element.DodajObrazek(element.Obrazek);
-                imageWydarzenia.DataContext = element;
+                imageWydarzenia.Source = element.Obraz;
             }
         }
         private void buttonUtworzObrazek_Click(object sender, RoutedEventArgs e)
@@ -164,7 +186,7 @@ namespace ProjektWPF
                 targetfilename = element.ID.ToString() + "." + format;
                 element.Obrazek = targetfilename;
                 element.Obraz = element.DodajObrazek(element.Obrazek);
-                imageWydarzenia.DataContext = element;
+                imageWydarzenia.Source = element.Obraz;
             }
         }
         private string NadajSciezke()

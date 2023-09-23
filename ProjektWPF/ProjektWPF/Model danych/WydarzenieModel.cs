@@ -25,13 +25,13 @@ namespace ProjektWPF.Model_danych
         public WydarzenieModel()
         {
             this.ID = Guid.NewGuid();
-            this.Nazwa = "TVN Szurbo";
+            this.Nazwa = "Nowe wydarzenie";
             this.DataOdliczania = DateTime.Now;
             this.Cykliczne = false;
             this.CzyCykliczne = "NIE";
             this.Typ = TypOdliczania.Jednorazowe;
             this.IleDni = 0;
-            this.Obrazek = "R.bmp";
+            this.Obrazek = "image.png";
             this.Obraz = DodajObrazek(Obrazek);
         }
         public WydarzenieModel(WydarzenieModel model)
