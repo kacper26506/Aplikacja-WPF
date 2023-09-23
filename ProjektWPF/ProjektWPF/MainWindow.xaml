@@ -26,5 +26,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="buttonUpdate" Content="Aktualizuj" HorizontalAlignment="Left" Height="34" Margin="312,72,0,0" VerticalAlignment="Top" Width="148" FontFamily="Arial" FontSize="24" Click="buttonUpdate_Click"/>
     </Grid>
 </Window>

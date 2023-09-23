@@ -57,100 +57,30 @@ namespace ProjektWPF
             //2 - aktualizacja listy odliczań
 
         }
-        private void AktualizujCzas()
-        {
-                DispatcherTimer dispatcherTimer2 = new DispatcherTimer();
-                dispatcherTimer2.Tick += dispatcherTimer_Tick2;
-                dispatcherTimer2.Interval = new TimeSpan(0, 0, 1);
-                dispatcherTimer2.Start();
-        }
-        private void dispatcherTimer_Tick2(object sender, EventArgs e)
-        {
-            List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
-            for (int i = 0; i < listWydarzenie.Items.Count; i++)
-            {
-                WydarzenieModel element = ListaWydarzen[i];
-                element.PelnaNazwa = element.Nazwa + " " + PozostalyCzas(element.DataOdliczania);
-            }
-            //tutaj sa funkcje aktualizujace wszystkie rzeczy
-            //1 - label z data i czasem
-            //2 - aktualizacja listy odliczań
-
-        }
-        private void ZaladujDane()
+        public void ZaladujDane()
         {
             service = Service.GetInstance();
-            List<WydarzenieModel> ListaWydarzen = service.Wydarzenia;
-            for (int i = 0; i < service.Wydarzenia.Count; i++)
-            {
-                WydarzenieModel element = ListaWydarzen[i];
-                if (element.DataOdliczania < DateTime.Now)
-                {
-                    if (element.Cykliczne)
-                    {
-                        service.ZmienDateDlaOdliczeniaIWpiszDoHistorii(element);
-                        service.Oblicz(element);
-                        service.EdytujWydarzenie(element);
-                    }
-                    else
-                    {
-                        element.Typ = TypOdliczania.Upłynął;
-                        service.Oblicz(element);
-                        service.EdytujWydarzenie(element);
-                        ServiceHistory.GetInstance().DodajdoHistorii(element);
-                        service.UsunWydarzenie(element.ID);
-                        listWydarzenie.Items.Remove(element);
-                    }
-                }
-                service.Oblicz(element);
-                element.PelnaNazwa = element.Nazwa + " " + PozostalyCzas(element.DataOdliczania);
-                listWydarzenie.Items.Add(ListaWydarzen[i]);
-            }
-        }
-        private string PozostalyCzas(DateTime czas)
-        {
-            int dni, godziny, minuty, sekundy;
-            DateTime CzasAktualny = DateTime.Now;
-            sekundy = 0;
-            while (CzasAktualny < czas)
-            {
-                CzasAktualny = CzasAktualny.AddSeconds(1);
-                sekundy++;
-            }
-            minuty = sekundy / 60;
-            godziny = minuty / 60;
-            dni = godziny / 24;
-            sekundy %= 60;
-            minuty %= 60;
-            godziny %= 24;
-            string PelnaNazwa = "Do wydarzenia zostało ";
-            switch (dni)
-            {
-                case 1:
-                    PelnaNazwa += "1 dzień ";
-                    break;
-                default:
-                    PelnaNazwa += dni;
-                    PelnaNazwa += " dni ";
-                    break;
-            }
-            PelnaNazwa += godziny;
-            PelnaNazwa += " godz ";
-            PelnaNazwa += minuty;
-            PelnaNazwa += " min ";
-            PelnaNazwa += sekundy;
-            PelnaNazwa += " sek";
-            return PelnaNazwa;
-        }
+            var wydarzenia = service.Wydarzenia;
+            wydarzenia = service.AktualizujWydarzenia(wydarzenia);
+            listWydarzenie.ItemsSource = wydarzenia;
+        } 
         private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)
         {
             Odliczenia odliczenia = new Odliczenia();
             odliczenia.ShowDialog();
+            // Tu będzie trzeba odświeżyć listę w głównym oknie
         }
         private void buttonWydarzenia_Click(object sender, RoutedEventArgs e)
         {
             Historia historia = new Historia();
             historia.ShowDialog();
+        }
+
+        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            var wydarzenia = service.Wydarzenia;
+            wydarzenia = service.AktualizujWydarzenia(wydarzenia);
+            listWydarzenie.ItemsSource = wydarzenia;
         }
     }
 }
