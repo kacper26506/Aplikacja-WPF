@@ -27,11 +27,13 @@ namespace ProjektWPF
     public partial class MainWindow : Window
     {
         Service service;
+        List<WydarzenieModel> listaWydarzen;
         public MainWindow()
         {
             InitializeComponent();
             SformatujWyswietlIAktualizujDate();
             ZaladujDane();
+            ObliczCzas();
         }
         private void SformatujWyswietlIAktualizujDate()
         {
@@ -57,18 +59,37 @@ namespace ProjektWPF
             //2 - aktualizacja listy odliczań
 
         }
+        private void ObliczCzas()
+        {
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick2;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        private void AktualizujDane()
+        {
+            //var wydarzenia = service.Wydarzenia;
+            service.AktualizujWydarzenia(listaWydarzen);
+          //  listWydarzenie.ItemsSource = null;
+           // listWydarzenie.ItemsSource = listaWydarzen;
+        }
+        private void dispatcherTimer_Tick2(object sender, EventArgs e)
+        {
+            AktualizujDane();
+        }
         public void ZaladujDane()
         {
             service = Service.GetInstance();
-            var wydarzenia = service.Wydarzenia;
-            wydarzenia = service.AktualizujWydarzenia(wydarzenia);
-            listWydarzenie.ItemsSource = wydarzenia;
+            listaWydarzen = service.Wydarzenia;
+            service.AktualizujWydarzenia(listaWydarzen);
+            listWydarzenie.ItemsSource = listaWydarzen;
         } 
         private void buttonOdliczenia_Click(object sender, RoutedEventArgs e)
         {
             Odliczenia odliczenia = new Odliczenia();
             odliczenia.ShowDialog();
             // Tu będzie trzeba odświeżyć listę w głównym oknie
+            AktualizujDane();
         }
         private void buttonWydarzenia_Click(object sender, RoutedEventArgs e)
         {
@@ -78,9 +99,7 @@ namespace ProjektWPF
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var wydarzenia = service.Wydarzenia;
-            wydarzenia = service.AktualizujWydarzenia(wydarzenia);
-            listWydarzenie.ItemsSource = wydarzenia;
+            
         }
     }
 }

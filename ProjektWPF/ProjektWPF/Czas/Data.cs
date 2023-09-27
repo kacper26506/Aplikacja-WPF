@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace ProjektWPF.Czas
 {
@@ -29,6 +30,10 @@ namespace ProjektWPF.Czas
             }
             return item;
         }
-
+        public string DataPowstania(DateTime czas)
+        {
+            return DzienTygodnia[(int)czas.DayOfWeek] + ", " + czas.Day + " " + NazwaMiesiaca[czas.Month - 1] + " " + 
+            czas.Year + " " + UstawNumer(czas.Hour) + ":" + UstawNumer(czas.Minute) + ":" + UstawNumer(czas.Second);
+        }
     }
 }

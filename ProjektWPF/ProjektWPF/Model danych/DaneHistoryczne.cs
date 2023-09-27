@@ -15,6 +15,7 @@ namespace ProjektWPF.Model_danych
         public string CzyCykliczne { get; set; }
         public TypOdliczania Typ { get; set; }
         public string Obrazek { get; set; }
+        public string DataUtworzenia { get; set; }
         public string Data
         {
             get
