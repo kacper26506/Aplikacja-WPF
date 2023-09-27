@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ProjektWPF.Czas;
 using ProjektWPF.Model_danych;
 using ProjektWPF.Serwis;
 

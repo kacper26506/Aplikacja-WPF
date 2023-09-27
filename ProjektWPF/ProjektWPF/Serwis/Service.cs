@@ -39,7 +39,7 @@ namespace ProjektWPF.Serwis
                 return list;
             }
         }
-        public List<WydarzenieModel> AktualizujWydarzenia(List<WydarzenieModel> listaWydarzen)
+        public void AktualizujWydarzenia(List<WydarzenieModel> listaWydarzen)
         {
             for (int i = 0; i < listaWydarzen.Count; i++)
             {
@@ -63,45 +63,40 @@ namespace ProjektWPF.Serwis
                         i--;
                     }
                 }
-                Oblicz(element);
+                //Oblicz(element);
                 element.PelnaNazwa = element.Nazwa + " " + PozostalyCzas(element.DataOdliczania);
             }
-            return listaWydarzen;
         }
         private string PozostalyCzas(DateTime czas)
         {
-            int dni, godziny, minuty, sekundy;
-            DateTime CzasAktualny = DateTime.Now;
-            sekundy = 0;
-            while (CzasAktualny < czas)
-            {
-                CzasAktualny = CzasAktualny.AddSeconds(1);
-                sekundy++;
-            }
+            long dni, godziny, minuty, sekundy;
+            DateTime czasAktualny = DateTime.Now;
+            sekundy = (long)(czas- DateTime.Now).TotalSeconds;
+            
             minuty = sekundy / 60;
             godziny = minuty / 60;
             dni = godziny / 24;
             sekundy %= 60;
             minuty %= 60;
             godziny %= 24;
-            string PelnaNazwa = "Do wydarzenia zostało ";
+            string pelnaNazwa = "Do wydarzenia zostało ";
             switch (dni)
             {
                 case 1:
-                    PelnaNazwa += "1 dzień ";
+                    pelnaNazwa += "1 dzień ";
                     break;
                 default:
-                    PelnaNazwa += dni;
-                    PelnaNazwa += " dni ";
+                    pelnaNazwa += dni;
+                    pelnaNazwa += " dni ";
                     break;
             }
-            PelnaNazwa += godziny;
-            PelnaNazwa += " godz ";
-            PelnaNazwa += minuty;
-            PelnaNazwa += " min ";
-            PelnaNazwa += sekundy;
-            PelnaNazwa += " sek";
-            return PelnaNazwa;
+            pelnaNazwa += godziny;
+            pelnaNazwa += " godz ";
+            pelnaNazwa += minuty;
+            pelnaNazwa += " min ";
+            pelnaNazwa += sekundy;
+            pelnaNazwa += " sek";
+            return pelnaNazwa;
         }
         public WydarzenieModel DodajWydarzenie(WydarzenieModel item)
         {
@@ -124,6 +119,7 @@ namespace ProjektWPF.Serwis
                     listDM[i].Typ = item.Typ;
                     listDM[i].IleDni = item.IleDni;
                     listDM[i].Obrazek = item.Obrazek;
+                    listDM[i].DataUtworzenia = item.DataUtworzenia;
                     Save();
                     return;
                 }
@@ -256,6 +252,7 @@ namespace ProjektWPF.Serwis
             element.Typ = item.Typ;
             element.IleDni = item.IleDni;
             element.Obrazek = item.Obrazek;
+            element.DataUtworzenia = item.DataUtworzenia;
             return element;
         }
         WydarzenieModel ConvertToListItemVM(WydarzeniaDM item)
@@ -270,6 +267,7 @@ namespace ProjektWPF.Serwis
             element.IleDni = item.IleDni;
             element.Obrazek = item.Obrazek;
             element.Obraz = element.DodajObrazek(element.Obrazek);
+            element.DataUtworzenia = item.DataUtworzenia;
             return element;
         }
     }

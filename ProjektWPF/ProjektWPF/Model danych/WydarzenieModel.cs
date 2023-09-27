@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using ProjektWPF.Czas;
+using System.Runtime.CompilerServices;
 
 namespace ProjektWPF.Model_danych
 {
-    public class WydarzenieModel
+    public class WydarzenieModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public Guid ID { get; set; }
         public string Nazwa { get; set; }
         public DateTime DataOdliczania { get; set; }
@@ -21,7 +29,23 @@ namespace ProjektWPF.Model_danych
         public int IleDni { get; set; }
         public string Obrazek { get; set; }
         public BitmapImage Obraz { get; set; }
-        public string PelnaNazwa { get; set; }
+        private string pelnaNazwa;
+        public string PelnaNazwa
+        {
+            get
+            {
+                return pelnaNazwa;
+            }
+            set
+            {
+                pelnaNazwa = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public string DataUtworzenia { get; set; }
+        private Data data { get; set; }
         public WydarzenieModel()
         {
             this.ID = Guid.NewGuid();
@@ -33,6 +57,8 @@ namespace ProjektWPF.Model_danych
             this.IleDni = 0;
             this.Obrazek = "image.png";
             this.Obraz = DodajObrazek(Obrazek);
+            data = new Data();
+            this.DataUtworzenia = data.DataPowstania(DateTime.Now);
         }
         public WydarzenieModel(WydarzenieModel model)
         {
@@ -45,7 +71,11 @@ namespace ProjektWPF.Model_danych
             this.IleDni = model.IleDni;
             this.Obrazek = model.Obrazek;
             this.Obraz = DodajObrazek(Obrazek);
+            this.DataUtworzenia = model.DataUtworzenia;
         }
+
+
+
         public BitmapImage DodajObrazek(string nazwaPliku)
         {
             string sciezka = System.Reflection.Assembly.GetExecutingAssembly().Location;
